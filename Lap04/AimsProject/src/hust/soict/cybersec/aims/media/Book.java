@@ -2,7 +2,6 @@ package hust.soict.cybersec.aims.media;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.ArrayList;
 
 public class Book extends Media
 {
@@ -12,6 +11,17 @@ public class Book extends Media
     {
         super();
     }
+
+    public Book(int id, String title, String category, float cost, List<String> authors)
+    {  
+        super(id, title, category, cost);
+        this.authors = authors;
+    }
+
+    public Book(int id, String title, String category, float cost)
+    {  
+        super(id, title, category, cost);
+    } 
 
     public void addAuthor(String authorName)
     {
@@ -39,5 +49,22 @@ public class Book extends Media
         }
     }
 
-    
+    @Override 
+    public String toString()
+    {
+        StringBuilder s = new StringBuilder("Book - " + "[" + super.getTitle() + "] - [" + super.getCategory() + "]: " + super.getCost() + "$\n");
+        s.append("List of authors: \n");
+        if (this.authors.size() == 0)
+        {
+            s.append("The Authors of this book are unknown\n");
+            return s.toString();
+        }
+
+        for (int i = 0; i < this.authors.size(); i++)
+        {
+            s.append((i + 1) + ". " + this.authors.get(i) + "\n");
+        }
+
+        return s.toString();
+    }
 }
