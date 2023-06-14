@@ -7,22 +7,17 @@ import hust.soict.cybersec.aims.media.Media;
 
 public class Cart 
 {
-    public static final int MAX_NUMBERS_ORDERED = 20;
     private List<Media> itemsOrdered = new ArrayList<Media>();
-    int qtyOrdered = 0;
+
+    public List<Media> getItemsOrdered() {
+        return itemsOrdered;
+    }
 
     public void addMedia(Media media)
     {
-        if (qtyOrdered < Cart.MAX_NUMBERS_ORDERED)
-        {
-            this.itemsOrdered.add(media);
-            qtyOrdered += 1;
-            System.out.println("The media has been added");
-        }
-        else
-        {
-            System.out.println("The cart is almost full");
-        }
+        this.itemsOrdered.add(media);
+
+        System.out.println("The media has been added");
     }
 
     /*The other version of "addMedia(Media... mediaList)"*/
@@ -57,41 +52,36 @@ public class Cart
         
         for (Media media : mediaList)
         {
-            if (qtyOrdered < Cart.MAX_NUMBERS_ORDERED)
-            {
                 addMedia(media);
-            }
-            else
-            {
-                addMedia(media);
-                break;
-            }
         }
     }
+    
 
     public void addMedia(Media media1,Media media2)
     {
         addMedia(media1);
-        if (qtyOrdered < Cart.MAX_NUMBERS_ORDERED)
-        {
-            addMedia(media2);
-        }
+        addMedia(media2);
+        
     }
 
 
     public void removeMedia(Media media)
     {
-        if (qtyOrdered == 0)
+        if (this.getItemsOrdered().size() == 0)
         {
             System.out.println("The cart is empty. There's nothing to remove");
             return;
         }
         this.itemsOrdered.remove(media);
-        qtyOrdered -= 1;
         System.out.println("the media has been removed");
 
     }
 
+
+    public void removeAll()
+    {
+        this.getItemsOrdered().clear();
+    }
 
     public float totalCost()
     {

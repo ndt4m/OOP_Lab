@@ -10,6 +10,12 @@ public class Track implements Playable
 
     }
 
+    public Track(String title, int length)
+    {
+        this.length = length;
+        this.title = title;
+    }
+
     public int getLength() {
         return length;
     }
@@ -27,5 +33,20 @@ public class Track implements Playable
     public void play()
     {
         System.out.println(this.toString());
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof Track)
+        {
+            Track track = (Track) obj;
+            if (track.title.equals(this.title) && track.length == this.length)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
