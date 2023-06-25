@@ -1,0 +1,71 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "ClassLoaderExample",
+            "request": "launch",
+            "mainClass": "hust.soict.cybersec.aims.screen.ClassLoaderExample",
+            "projectName": "AimsProject_1dd6ff31"
+        },
+        {
+            "type": "java",
+            "name": "CartScreen",
+            "request": "launch",
+            "mainClass": "hust.soict.cybersec.aims.screen.CartScreen",
+            "projectName": "AimsProject_1dd6ff31",
+            "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-20.0.1/lib\" --add-modules javafx.controls,javafx.fxml,javafx.base,javafx.graphics,javafx.media,javafx.swing,javafx.web"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Aims",
+            "request": "launch",
+            "mainClass": "hust.soict.cybersec.aims.Aims",
+            "projectName": "AimsProject_1dd6ff31"
+        },
+        {
+            "type": "java",
+            "name": "Media",
+            "request": "launch",
+            "mainClass": "hust.soict.cybersec.aims.media.Media",
+            "projectName": "AimsProject_1dd6ff31"
+        },
+        {
+            "type": "java",
+            "name": "StoreScreen",
+            "request": "launch",
+            "mainClass": "hust.soict.cybersec.aims.screen.StoreScreen",
+            "projectName": "AimsProject_1dd6ff31"
+        },
+        {
+            "type": "java",
+            "name": "CartTest",
+            "request": "launch",
+            "mainClass": "hust.soict.cybersec.test.cart.CartTest",
+            "projectName": "AimsProject_1dd6ff31"
+        },
+        {
+            "type": "java",
+            "name": "TestPassingParameter",
+            "request": "launch",
+            "mainClass": "hust.soict.cybersec.test.disc.TestPassingParameter",
+            "projectName": "AimsProject_1dd6ff31"
+        },
+        {
+            "type": "java",
+            "name": "StoreTest",
+            "request": "launch",
+            "mainClass": "hust.soict.cybersec.test.store.StoreTest",
+            "projectName": "AimsProject_1dd6ff31"
+        }
+    ]
+}
