@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import hust.soict.cybersec.aims.cart.Cart;
+import hust.soict.cybersec.aims.exception.PlayerException;
 import hust.soict.cybersec.aims.media.Book;
 import hust.soict.cybersec.aims.media.CompactDisc;
 import hust.soict.cybersec.aims.media.DigitalVideoDisc;
@@ -13,12 +14,17 @@ import hust.soict.cybersec.aims.media.Playable;
 import hust.soict.cybersec.aims.store.Store;
 import hust.soict.cybersec.aims.media.Media;
 import hust.soict.cybersec.aims.media.Track;
+import hust.soict.cybersec.aims.screen.AddBookToStoreScreen;
+import hust.soict.cybersec.aims.screen.AddCompactDiscToStoreScreen;
+import hust.soict.cybersec.aims.screen.AddDigitalVideoDiscToStoreScreen;
+import hust.soict.cybersec.aims.screen.CartScreen;
+import hust.soict.cybersec.aims.screen.StoreScreen;
 
 public class Aims 
 {
     private static Scanner sc = new Scanner(System.in);
-    private static Store store = new Store();
-    private static Cart cart = new Cart();
+    public static Store store = new Store();
+    public static Cart cart = new Cart();
 
     public static void StoreItems()
     {
@@ -34,7 +40,7 @@ public class Aims
         authors.add("Tam");
         authors.add("Tammmmm");
         Media book1 = new Book(2, "Learn Java", "Programming", 20f, authors);
-        Book book2 = new Book(4,"Life of Pi", "Adventure fiction", 18.10f);
+        Book book2 = new Book(4,"The Amazing World of Gumball", "Adventure fiction", 18.10f);
 
         Media dvd1 = new DigitalVideoDisc("The Lion King", 
                                                   "Animation", 
@@ -192,7 +198,12 @@ public class Aims
                         if (media instanceof Playable)
                         {
                             System.out.println("Play " + media.getTitle());
-                            ((Playable) media).play();
+                            try {
+                                ((Playable) media).play();
+                            } catch (PlayerException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
                         }
                         else
                         {
@@ -284,7 +295,12 @@ public class Aims
                         if (media instanceof Playable)
                         {
                             System.out.println("Play " + media.getTitle());
-                            ((Playable) media).play();
+                            try {
+                                ((Playable) media).play();
+                            } catch (PlayerException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
                         }
                         else
                         {
@@ -601,6 +617,10 @@ public class Aims
     {
 
         StoreItems();
-        showMenu();
+        new CartScreen(cart, store);
+        new StoreScreen(store, cart);
+        new AddBookToStoreScreen(store);
+        new AddCompactDiscToStoreScreen(store);
+        new AddDigitalVideoDiscToStoreScreen(store);
     }
 }

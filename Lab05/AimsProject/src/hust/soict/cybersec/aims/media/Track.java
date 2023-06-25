@@ -1,5 +1,7 @@
 package hust.soict.cybersec.aims.media;
 
+import hust.soict.cybersec.aims.exception.PlayerException;
+
 public class Track implements Playable
 {
     private String title;
@@ -30,9 +32,17 @@ public class Track implements Playable
         return "Track - " + "[" +  this.getTitle() + "] - [" + this.getLength() + "]";
     }
 
-    public void play()
+    public void play() throws PlayerException
     {
-        System.out.println(this.toString());
+        if (this.getLength() > 0)
+        {
+            System.out.println(this.toString());
+        }
+        else
+        {
+            throw new PlayerException("[-] ERROR: Track length is non-positive!");
+        }
+        
     }
 
     @Override

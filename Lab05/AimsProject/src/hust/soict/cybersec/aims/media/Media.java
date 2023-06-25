@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
 
-public abstract class Media 
+public class Media 
 {
     public static final Comparator<Media> COMPARE_BY_TITLE_COST = new MediaComparatorByTitleCost();
     public static final Comparator<Media> COMPARE_BY_COST_TITLE = new MediaComparatorByCostTitle();
@@ -22,6 +22,12 @@ public abstract class Media
         this.cost = cost;
     }
 
+    public Media(String title, String category, float cost)
+    {
+        this.title = title;
+        this.category = category;
+        this.cost = cost;
+    }
     public Media()
     {
 
@@ -69,13 +75,18 @@ public abstract class Media
     {
         if (obj instanceof Media)
         {
-            Media media = (Media) obj;
-            if (media.title.equals(this.title))
-            {
-                return true;
+            try {
+                Media media = (Media) obj;
+                if (media.title.equals(this.title))
+                {
+                    return true;
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            } catch (ClassCastException e) {
+                e.printStackTrace();
             }
         }
-
         return false;
     }
 

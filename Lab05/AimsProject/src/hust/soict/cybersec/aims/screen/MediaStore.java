@@ -1,30 +1,41 @@
 package hust.soict.cybersec.aims.screen;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Frame;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import hust.soict.cybersec.aims.media.CompactDisc;
+import hust.soict.cybersec.aims.cart.Cart;
+import hust.soict.cybersec.aims.exception.PlayerException;
 import hust.soict.cybersec.aims.media.Media;
 import hust.soict.cybersec.aims.media.Playable;
-import hust.soict.cybersec.aims.media.Track;
 
 public class MediaStore extends JPanel
 {
     private Media media;
-    public MediaStore(Media media)
+    private Cart cart;
+
+    public MediaStore(Media media, Cart cart)
     {
         this.media = media;
+        this.cart = cart;
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JLabel title = new JLabel(media.getTitle());
@@ -61,38 +72,95 @@ public class MediaStore extends JPanel
     private class ButtonListener implements ActionListener
     {
         @Override
-        public void actionPerformed(ActionEvent e)
+        public void actionPerformed(ActionEvent event)
         {
-            String button = e.getActionCommand();
+            String button = event.getActionCommand();
 
             if (button.equals("Play"))
             {
-                JDialog playDialog = new JDialog();
-                playDialog.setLayout(new FlowLayout(FlowLayout.CENTER));
-                playDialog.add(new JLabel(media.toString()));
-                // StringBuilder s = new StringBuilder();
-                // s.append(media.toString() + "\n");
-                if (media instanceof CompactDisc)
-                {
-                    for (Track track: ((CompactDisc) media).getTracks())
-                    {
-                        
-                        playDialog.add(new JLabel(track.toString()));
+                JFrame jFrame = new JFrame();
 
+                for (Frame frame : Frame.getFrames()) 
+                {
+                    if (frame.getTitle().equals("Store")) 
+                    {
+                        jFrame = (JFrame) frame;
+                        break;
                     }
                 }
-                // JLabel l = new JLabel(s.toString());
-            
- 
-                // setsize of dialog
-                playDialog.setSize(500, 500);
-                
-                // set visibility of dialog
-                playDialog.setVisible(true);
+
+                try {
+                    ((Playable) media).play();
+
+                    JDialog playDialog = new JDialog(jFrame, "Play Media", true);
+                    playDialog.setLayout(new BorderLayout());
+
+                    StringBuilder s = new StringBuilder();
+                    s.append(media.toString());
+
+
+                    JTextArea textArea = new JTextArea(s.toString(), 5, 20);
+                    textArea.setLineWrap(true);
+                    textArea.setWrapStyleWord(true);
+
+                    JScrollPane scrollPane = new JScrollPane(textArea);
+                    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+
+                    playDialog.add(scrollPane, BorderLayout.CENTER);
+
+                    JButton btnExit = new JButton("Exit");
+                    btnExit.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(java.awt.event.ActionEvent e) {
+                            playDialog.setVisible(false);
+                        }
+                    });
+
+                    playDialog.add(btnExit, BorderLayout.SOUTH);
+                    playDialog.setSize(300, 200);
+                    playDialog.setLocationRelativeTo(jFrame);
+                    playDialog.setVisible(true);
+                } catch (PlayerException e) {
+                    JOptionPane.showMessageDialog(
+                            jFrame,
+                            e.getMessage(),
+                            "media length is smaller than 0!",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                    //e.printStackTrace();
+                }
             }
             else if (button.equals("Add to cart"))
             {
-                StoreScreen.cart.addMedia(media);
+                JFrame jFrame = new JFrame();
+                for (Frame frame : Frame.getFrames()) 
+                {
+                    if (frame.getTitle().equals("Store")) 
+                    {
+                        jFrame = (JFrame) frame;
+                        break;
+                    }
+                }
+
+                if (!cart.getItemsOrdered().contains(media))
+                {
+                    cart.addMedia(media);
+                    JOptionPane.showMessageDialog(
+                        jFrame,
+                        "The Media has been added succesfully!",
+                        "Adding alert",
+                        JOptionPane.INFORMATION_MESSAGE);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(
+                        jFrame,
+                        "The Media has already been added in the past!",
+                        "Adding error",
+                        JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }

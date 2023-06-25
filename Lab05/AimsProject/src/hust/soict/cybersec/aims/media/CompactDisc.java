@@ -3,6 +3,8 @@ package hust.soict.cybersec.aims.media;
 import java.util.ArrayList;
 import java.util.List;
 
+import hust.soict.cybersec.aims.exception.PlayerException;
+
 public class CompactDisc extends Disc implements Playable
 {
     private String artist;
@@ -13,6 +15,12 @@ public class CompactDisc extends Disc implements Playable
     public CompactDisc()
     {
         super();
+    }
+
+    public CompactDisc(String title, String category, float cost, int length, String director, String artist)
+    {
+        super(title, category, cost, length, director);
+        this.artist = artist;
     }
 
     public CompactDisc(int id, String title, String category, float cost, int length, String director, String artist, List<Track> tracks)
@@ -77,12 +85,37 @@ public class CompactDisc extends Disc implements Playable
         return s.toString();
     }
 
-    public void play()
+    public void play() throws PlayerException
     {
-        System.out.println(this.toString());
-        for (Track track : this.tracks)
+        System.out.println("CD - " + "[" + super.getTitle() + "] - [" + this.getArtist() + "] - ["+ super.getDirector() + "] - [" + super.getLength() + "]: " + super.getCost() + "$\nList of Track: ");
+        if (this.getLength() > 0)
         {
-            track.play();
+            java.util.Iterator<Track> iter = tracks.iterator();
+            Track nextTrack;
+            while (iter.hasNext())
+            {
+                nextTrack = (Track) iter.next();
+                try {
+                    nextTrack.play();
+                } catch (PlayerException e) {
+                    throw e;
+                }
+            }
         }
+        else
+        {
+            throw new PlayerException("[-] ERROR: CD length is non-positive!");
+        }
+
+        // System.out.println(this.toString());
+        // for (Track track : this.tracks)
+        // {
+        //     try {
+        //         track.play();
+        //     } catch (PlayerException e)
+        //     {
+        //         throw e;
+        //     }
+        // }
     }
 }

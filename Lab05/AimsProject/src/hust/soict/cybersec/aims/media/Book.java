@@ -18,6 +18,17 @@ public class Book extends Media
         this.authors = authors;
     }
 
+    public Book(String title, String category, float cost)
+    {
+        super(title, category, cost);
+    }
+    
+    public Book(String title, String category, float cost, List<String> authors)
+    {
+        super(title, category, cost);
+        this.authors = authors;
+    }
+    
     public Book(int id, String title, String category, float cost)
     {  
         super(id, title, category, cost);

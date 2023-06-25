@@ -1,5 +1,7 @@
 package hust.soict.cybersec.aims.media;
 
+import hust.soict.cybersec.aims.exception.PlayerException;
+
 public class DigitalVideoDisc extends Disc implements Playable
 {
     private static int nbDigitalVideoDiscs = 0;
@@ -44,7 +46,7 @@ public class DigitalVideoDisc extends Disc implements Playable
         super.setTitle(title);
         super.setCategory(category);
         super.setDirector(director);;
-        super.setDirector(director);;
+        super.setLength(length);;
         super.setCost(cost);
     }
 
@@ -59,8 +61,15 @@ public class DigitalVideoDisc extends Disc implements Playable
         return "DVD - " + "[" + super.getTitle() + "] - [" + super.getDirector() + "] - [" + super.getLength() + "]: " + super.getCost() + "$\n";
     }
 
-    public void play()
+    public void play() throws PlayerException
     {
-        System.out.println("DigitalVideo " + this.toString());
+        if (this.getLength() > 0)
+        {
+            System.out.println("DigitalVideo " + this.toString());
+        }
+        else
+        {
+            throw new PlayerException("[-] ERROR: DVD length is non-positive!");
+        }
     }
 }

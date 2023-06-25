@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hust.soict.cybersec.aims.media.Media;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Store 
 {
-    private List<Media> itemsInStore;
+    private ObservableList<Media> itemsInStore;
 
     public Store() {
-        itemsInStore = new ArrayList<Media>();
+        itemsInStore = FXCollections.observableArrayList();
     }
 
-    public List<Media> getItemsInStore() {
+    public ObservableList<Media> getItemsInStore() {
         return itemsInStore;
     }
 
